@@ -12,7 +12,7 @@ object LabelProp {
     val numIter = args(1).toInt
 
     val conf = new SparkConf()
-      .setAppName("LabelProp " + file)
+      .setAppName("LabelPropaa " + file)
 
     val sc = new SparkContext(conf)
 
