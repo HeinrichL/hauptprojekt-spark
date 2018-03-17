@@ -7,16 +7,16 @@ import org.apache.spark.graphx.GraphLoader
 object SCC {
   def main(args: Array[String]) {
 
-    val file = args(0)
+    val file = Config.hdfs + args(0)
     val numIter = args(1).toInt
 
-    val conf = new SparkConf().setAppName("SCC " + file)
+    val conf = new SparkConf().setAppName("SCC " + file)//.setMaster("local")
     val sc = new SparkContext(conf)
     
-    val graph: Graph[Int, Int] =  GraphLoader.edgeListFile(sc, "hdfs://hdfs-namenode-0.hdfs-namenode.abk609.svc.cluster.local/" + file).cache()
+    val graph: Graph[Int, Int] =  GraphLoader.edgeListFile(sc, file).cache()
 
     val computed = graph.stronglyConnectedComponents(numIter)
         
-    println(computed.vertices.count())
+    println(computed.vertices.takeSample(false, 1000).mkString("\n"))
   }
 }

@@ -8,15 +8,15 @@ import org.apache.spark.graphx.GraphLoader
 object LabelProp {
   def main(args: Array[String]) {
 
-    val file = args(0)
+    val file = Config.hdfs + args(0)
     val numIter = args(1).toInt
 
     val conf = new SparkConf()
-      .setAppName("LabelPropaa " + file)
+      .setAppName("Label Propagation " + file)//.setMaster("local[*]")
 
     val sc = new SparkContext(conf)
 
-    val graph: Graph[Int, Int] =  GraphLoader.edgeListFile(sc, "hdfs://hdfs-namenode-0.hdfs-namenode.abk609.svc.cluster.local/" + file).cache()
+    val graph: Graph[Int, Int] =  GraphLoader.edgeListFile(sc, file).cache()
 
     val computed = LabelPropagation.run(graph, numIter)
         

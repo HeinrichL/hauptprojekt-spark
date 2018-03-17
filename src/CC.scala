@@ -14,8 +14,7 @@ object CC {
 
     val sc = new SparkContext(conf)
 
-    val graph: Graph[Int, Int] =  GraphLoader.edgeListFile(sc, "hdfs://hdfs-namenode-0.hdfs-namenode.abk609.svc.cluster.local/" + file).cache()
-
+    val graph: Graph[Int, Int] =  GraphLoader.edgeListFile(sc, Config.hdfs + file).cache()
     val computed = graph.connectedComponents()
         
     println(computed.vertices.count())
